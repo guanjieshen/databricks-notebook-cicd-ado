@@ -1,0 +1,9 @@
+{
+    "environments": {
+        "default": {
+            "profile": "guanjie-workspace",
+            "workspace_dir": "/Shared/dbx/databricks_notebook_cicd",
+            "artifact_location": "dbfs:/Shared/dbx/projects/databricks_notebook_cicd"
+        }
+    }
+}

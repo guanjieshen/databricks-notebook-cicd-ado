@@ -1,0 +1,58 @@
+custom:
+  basic-cluster-props: &basic-cluster-props
+    spark_version: "10.4.x-cpu-ml-scala2.12"
+    runtime_engine: STANDARD
+    spark_conf:
+      spark.databricks.delta.preview.enabled: 'true'
+
+  basic-static-cluster: &basic-static-cluster
+    new_cluster:
+      <<: *basic-cluster-props
+      num_workers: 1
+      node_type_id: "Standard_E8_v3"
+
+# please note that we're using FUSE reference for config file, hence we're going to load this file using its local FS path
+environments:
+  default:
+    workflows:
+      - name: "databricks-notebook-cicd"
+        #TODO: Change the following to your email
+        email_notifications:
+          on_start: [ "guanjie.shen@databricks.com" ]
+          on_success: [ "guanjie.shen@databricks.com" ]
+          on_failure: [ "guanjie.shen@databricks.com" ]
+
+        #OPTIONAL: Alters for skipped runs
+        no_alert_for_skipped_runs: false
+
+        #OPTIONAL: Set additional tagging
+        tags:
+          owner: "Guanjie Shen"
+          Status: "Active"
+
+        format: MULTI_TASK
+
+        #TODO: Change the following to the set the appropriate owners
+        access_control_list:
+          - user_name: "guanjie.shen@databricks.com"
+            permission_level: "IS_OWNER"
+          - group_name: "users"
+            permission_level: "CAN_VIEW"
+
+        job_clusters:
+          - job_cluster_key: "basic-static-cluster"
+            <<: *basic-static-cluster
+
+        tasks:
+          - task_key: "task-01"
+            job_cluster_key: "basic-static-cluster"
+            max_retries: 1
+            notebook_task:
+              notebook_path: "/Repos/some/project/notebook"
+            min_retry_interval_millis: 900000
+            retry_on_timeout: false
+            timeout_seconds: 10
+            email_notifications:
+              on_start: [ "guanjie.shen@databricks.com" ]
+              on_success: [ "guanjie.shen@databricks.com" ]
+              on_failure: [ "guanjie.shen@databricks.com" ]
