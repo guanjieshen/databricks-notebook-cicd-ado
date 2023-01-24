@@ -6,6 +6,7 @@ trigger:
     - notebooks/*
     - conf/*
   branches:
+  #TODO: Update branch names
     include:
     - 'dev'
     - 'main'
