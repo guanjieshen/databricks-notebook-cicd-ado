@@ -15,6 +15,7 @@ pr: none # disable PR from triggering deployment
 
 stages:
 - stage: onPush
+  condition: and(eq(variables['Build.SourceBranchName'], 'dev'), eq(variables['Build.Reason'], 'IndividualCI'))
   jobs:
   - job: onPushJob
     pool:
@@ -44,5 +45,5 @@ stages:
       displayName: 'Deploy Workflow'
 
     - script: |
-        dbx launch --job=databricks-notebook-cicd --existing-runs=cancel
+        dbx launch --job=databricks-notebook-cicd-dev --existing-runs=cancel
       displayName: 'Restart Databricks Job'
