@@ -1,7 +1,7 @@
 # Databricks notebook source
 rowsPerSeconds = 50
 rampUpTime = 10
-numPartitions = 10
+numPartitions = 1
 
 # COMMAND ----------
 
