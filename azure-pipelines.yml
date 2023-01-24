@@ -3,9 +3,15 @@ variables:
 
 trigger:
   batch: true
+  # Only trigger on the following paths
+  paths:
+    include:
+    - notebooks/*
+    - conf/*
   branches:
     include:
     - 'dev'
+pr: none # disable PR from triggering deployment
 
 stages:
 - stage: onPush
