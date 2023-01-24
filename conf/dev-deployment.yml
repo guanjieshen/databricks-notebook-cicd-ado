@@ -1,8 +1,8 @@
 custom:
   #TODO: Adjust the cluster
   basic-cluster-props: &basic-cluster-props
-    spark_version: "10.4.x-cpu-scala2.12"
-    runtime_engine: PHOTON
+    spark_version: "10.4.x-cpu-ml-scala2.12"
+    runtime_engine: STANDARD
     spark_conf:
       spark.databricks.delta.preview.enabled: 'true'
 
@@ -49,7 +49,6 @@ environments:
           - task_key: "task-01"
             job_cluster_key: "basic-static-cluster"
             # Add dependent libraries
-            libraries: [pypi: {"package" : "simplejson"}]
             max_retries: 1
             notebook_task:
               notebook_path: "notebooks/streaming_job"

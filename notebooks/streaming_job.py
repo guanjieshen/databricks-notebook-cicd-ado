@@ -1,5 +1,5 @@
 # Databricks notebook source
-rowsPerSeconds = 100
+rowsPerSeconds = 75
 rampUpTime = 10
 numPartitions = 1
 
@@ -12,6 +12,10 @@ df = (
     .option("numPartitions", numPartitions)
     .load()
 )
+
+# COMMAND ----------
+
+print("hello world")
 
 # COMMAND ----------
 
