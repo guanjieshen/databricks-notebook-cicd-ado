@@ -1,5 +1,5 @@
 # Databricks notebook source
-rowsPerSeconds = 50
+rowsPerSeconds = 75
 rampUpTime = 10
 numPartitions = 1
 
