@@ -15,4 +15,8 @@ df = (
 
 # COMMAND ----------
 
+print("hello world")
+
+# COMMAND ----------
+
 display(df)
