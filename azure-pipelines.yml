@@ -6,6 +6,7 @@ trigger:
     - notebooks/*
     - conf/*
   branches:
+  #TODO: Update branch names
     include:
     - 'dev'
     - 'main'
@@ -15,6 +16,7 @@ stages:
 # Deploy to Dev Environment
 - stage: onPushDev
   condition: and(eq(variables['Build.SourceBranchName'], 'dev'), eq(variables['Build.Reason'], 'BatchedCI'))
+  # Defines which Databricks Workspace to deploy 
   variables:
   - group: dev-databricks-workspace-environment
   jobs:
@@ -52,6 +54,7 @@ stages:
 # Deploy to Prod Environment
 - stage: onPushProd
   condition: and(eq(variables['Build.SourceBranchName'], 'main'), eq(variables['Build.Reason'], 'BatchedCI'))
+  # Defines which Databricks Workspace to deploy 
   variables:
   - group: prod-databricks-workspace-environment
   jobs:
