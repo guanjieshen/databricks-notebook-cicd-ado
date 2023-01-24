@@ -1,5 +1,5 @@
-# Databricks notebook sourcedata
-rowsPerSeconds = 100
+# Databricks notebook source
+rowsPerSeconds = 50
 rampUpTime = 5
 numPartitions = 10
 
