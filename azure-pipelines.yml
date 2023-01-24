@@ -15,7 +15,7 @@ pr: none # disable PR from triggering deployment
 
 stages:
 - stage: onPush
-  condition: and(eq(variables['Build.SourceBranchName'], 'dev'), eq(variables['Build.Reason'], 'IndividualCI'))
+  condition: and(eq(variables['Build.SourceBranchName'], 'dev'), eq(variables['Build.Reason'], 'BatchedCI'))
   jobs:
   - job: onPushJob
     pool:
