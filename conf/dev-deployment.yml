@@ -1,4 +1,5 @@
 custom:
+  #TODO: Adjust the cluster
   basic-cluster-props: &basic-cluster-props
     spark_version: "10.4.x-cpu-ml-scala2.12"
     runtime_engine: STANDARD
@@ -15,28 +16,28 @@ custom:
 environments:
   default:
     jobs:
+        #TODO: Change the name of this job
       - name: "databricks-notebook-cicd"
-        #TODO: Change the following to your email
+        #TODO: Change the following to the relevant email
         email_notifications:
           on_start: [ "guanjie.shen@databricks.com" ]
           on_success: [ "guanjie.shen@databricks.com" ]
           on_failure: [ "guanjie.shen@databricks.com" ]
 
-        #TODO: Change the point to your repository
+        #TODO: Change this to the relevant repository
         git_source:
           git_url: https://github.com/guanjieshen/databricks-notebook-cicd.git
           git_provider: "GitHub"
           git_branch: "dev"
 
-        #OPTIONAL: Alters for skipped runs
-        no_alert_for_skipped_runs: false
-
-        #OPTIONAL: Set additional tagging
+        #TODO: Set  tagging
         tags:
           owner: "Guanjie Shen"
-          Status: "Active"
+          pipeline_type: "Streaming"
+          environment: "Development"
 
-        format: MULTI_TASK
+        #OPTIONAL: Alters for skipped runs
+        no_alert_for_skipped_runs: false
 
         #TODO: Change the following to the set the appropriate owners
         access_control_list:
@@ -55,10 +56,9 @@ environments:
             max_retries: 1
             notebook_task:
               notebook_path: "notebooks/streaming_job"
-            deployment_config:
-              no_package: true
+              base_parameters: {"env" : "dev"}
             min_retry_interval_millis: 900000
-            retry_on_timeout: false
+            #TODO: Change the following to your email
             email_notifications:
               on_start: [ "guanjie.shen@databricks.com" ]
               on_success: [ "guanjie.shen@databricks.com" ]
@@ -66,14 +66,12 @@ environments:
 
           - task_key: "task-02"
             job_cluster_key: "basic-static-cluster"
-            max_retries: 1
+            max_retries: 10
             notebook_task:
               notebook_path: "notebooks/streaming_job"
-            deployment_config:
-              no_package: true
+              base_parameters: {"env" : "dev"}
             min_retry_interval_millis: 900000
-            retry_on_timeout: false
-            timeout_seconds: 10
+            #TODO: Change the following to your email
             email_notifications:
               on_start: [ "guanjie.shen@databricks.com" ]
               on_success: [ "guanjie.shen@databricks.com" ]

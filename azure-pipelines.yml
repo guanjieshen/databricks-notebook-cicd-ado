@@ -1,0 +1,43 @@
+variables:
+- group: Databricks-environment
+
+trigger:
+  batch: true
+  branches:
+    include:
+    - 'dev'
+
+stages:
+- stage: onPush
+  jobs:
+  - job: onPushJob
+    pool:
+      vmImage: 'ubuntu-18.04'
+
+    steps:
+    - script: env | sort
+      displayName: 'Environment / Context'
+
+    - task: UsePythonVersion@0
+      displayName: 'Use Python 3.7'
+      inputs:
+        versionSpec: 3.7
+
+    - checkout: self
+      persistCredentials: true
+      clean: true
+      displayName: 'Checkout & Build.Reason: $(Build.Reason) & Build.SourceBranchName: $(Build.SourceBranchName)'
+
+    - script: |
+        python -m pip install --upgrade pip
+        pip install -r unit-requirements.txt
+        pip install -e .
+      displayName: 'Install dependencies'
+
+    - script: |
+        dbx deploy --deployment-file=conf/dev-deployment.yml --no-rebuild
+      displayName: 'Deploy Workflow'
+
+    - script: |
+        dbx launch --job=databricks-notebook-cicd --existing-runs=cancel
+      displayName: 'Restart Databricks Job'

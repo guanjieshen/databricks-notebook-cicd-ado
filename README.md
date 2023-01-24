@@ -98,3 +98,7 @@ Please set the following secrets or environment variables for your CI provider:
 git tag -a v<your-project-version> -m "Release tag for version <your-project-version>"
 git push origin --tags
 ```
+
+`dbx deploy --deployment-file=conf/dev-deployment.yml --no-rebuild`
+
+` dbx launch --job=databricks-notebook-cicd --existing-runs=cancel  `
