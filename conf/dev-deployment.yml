@@ -14,13 +14,19 @@ custom:
 # please note that we're using FUSE reference for config file, hence we're going to load this file using its local FS path
 environments:
   default:
-    workflows:
+    jobs:
       - name: "databricks-notebook-cicd"
         #TODO: Change the following to your email
         email_notifications:
           on_start: [ "guanjie.shen@databricks.com" ]
           on_success: [ "guanjie.shen@databricks.com" ]
           on_failure: [ "guanjie.shen@databricks.com" ]
+
+        #TODO: Change the point to your repository
+        git_source:
+          git_url: https://github.com/guanjieshen/databricks-notebook-cicd.git
+          git_provider: "GitHub"
+          git_branch: "dev"
 
         #OPTIONAL: Alters for skipped runs
         no_alert_for_skipped_runs: false
@@ -48,7 +54,24 @@ environments:
             job_cluster_key: "basic-static-cluster"
             max_retries: 1
             notebook_task:
-              notebook_path: "/Repos/some/project/notebook"
+              notebook_path: "notebooks/streaming_job"
+            deployment_config:
+              no_package: true
+            min_retry_interval_millis: 900000
+            retry_on_timeout: false
+            timeout_seconds: 10
+            email_notifications:
+              on_start: [ "guanjie.shen@databricks.com" ]
+              on_success: [ "guanjie.shen@databricks.com" ]
+              on_failure: [ "guanjie.shen@databricks.com" ]
+
+          - task_key: "task-02"
+            job_cluster_key: "basic-static-cluster"
+            max_retries: 1
+            notebook_task:
+              notebook_path: "notebooks/streaming_job"
+            deployment_config:
+              no_package: true
             min_retry_interval_millis: 900000
             retry_on_timeout: false
             timeout_seconds: 10

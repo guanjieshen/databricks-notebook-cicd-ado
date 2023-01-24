@@ -1,18 +1,19 @@
-# Databricks notebook sourcedata
-rowsPerSeconds = 100
-rampUpTime = 5
-numPartitions = 10
+# # Databricks notebook sourcedata
+# rowsPerSeconds = 100
+# rampUpTime = 5
+# numPartitions = 10
 
-# COMMAND ----------
+# # COMMAND ----------
 
-df = (
-    spark.readStream.format("rate")
-    .option("rowsPerSecond", rowsPerSeconds)
-    .option("rampUpTime", rampUpTime)
-    .option("numPartitions", numPartitions)
-    .load()
-)
+# df = (
+#     spark.readStream.format("rate")
+#     .option("rowsPerSecond", rowsPerSeconds)
+#     .option("rampUpTime", rampUpTime)
+#     .option("numPartitions", numPartitions)
+#     .load()
+# )
 
-# COMMAND ----------
+# # COMMAND ----------
 
-display(df)
+# display(df)
+print("hello")
