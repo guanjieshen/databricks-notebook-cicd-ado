@@ -48,8 +48,8 @@ environments:
         tasks:
           - task_key: "task-01"
             job_cluster_key: "basic-static-cluster"
-            libraries:
-              pypi: {"package" : "simplejson"}
+            # Add dependent libraries
+            libraries: [pypi: {"package" : "simplejson"}]
             max_retries: 1
             notebook_task:
               notebook_path: "notebooks/streaming_job"
