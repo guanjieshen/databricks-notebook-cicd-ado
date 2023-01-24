@@ -59,7 +59,6 @@ environments:
               no_package: true
             min_retry_interval_millis: 900000
             retry_on_timeout: false
-            timeout_seconds: 10
             email_notifications:
               on_start: [ "guanjie.shen@databricks.com" ]
               on_success: [ "guanjie.shen@databricks.com" ]
