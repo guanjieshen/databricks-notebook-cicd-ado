@@ -1,6 +1,3 @@
-variables:
-- group: Databricks-environment
-
 trigger:
   batch: true
   # Only trigger on the following paths
@@ -11,10 +8,15 @@ trigger:
   branches:
     include:
     - 'dev'
+    - 'main'
 pr: none # disable PR from triggering deployment
 
 stages:
-- stage: onPush
+# Deploy to Dev Environment
+- stage: onPushDev
+  condition: and(eq(variables['Build.SourceBranchName'], 'dev'), eq(variables['Build.Reason'], 'BatchedCI'))
+  variables:
+  - group: dev-databricks-workspace-environment
   jobs:
   - job: onPushJob
     pool:
@@ -44,5 +46,42 @@ stages:
       displayName: 'Deploy Workflow'
 
     - script: |
-        dbx launch --job=databricks-notebook-cicd --existing-runs=cancel
+        dbx launch --job=databricks-notebook-cicd-ado-dev --existing-runs=cancel
+      displayName: 'Restart Databricks Job'
+
+# Deploy to Prod Environment
+- stage: onPushProd
+  condition: and(eq(variables['Build.SourceBranchName'], 'main'), eq(variables['Build.Reason'], 'BatchedCI'))
+  variables:
+  - group: prod-databricks-workspace-environment
+  jobs:
+  - job: onPushJob
+    pool:
+      vmImage: 'ubuntu-22.04'
+
+    steps:
+    - script: env | sort
+      displayName: 'Environment / Context'
+
+    - task: UsePythonVersion@0
+      displayName: 'Use Python 3.7'
+      inputs:
+        versionSpec: 3.7
+
+    - checkout: self
+      persistCredentials: true
+      clean: true
+      displayName: 'Checkout & Build.Reason: $(Build.Reason) & Build.SourceBranchName: $(Build.SourceBranchName)'
+
+    - script: |
+        python -m pip install --upgrade pip
+        pip install -r unit-requirements.txt
+      displayName: 'Install dependencies'
+
+    - script: |
+        dbx deploy --deployment-file=conf/prod-deployment.yml --no-rebuild
+      displayName: 'Deploy Workflow'
+
+    - script: |
+        dbx launch --job=databricks-notebook-cicd-ado-prod --existing-runs=cancel
       displayName: 'Restart Databricks Job'
