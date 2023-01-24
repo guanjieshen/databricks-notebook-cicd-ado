@@ -46,7 +46,7 @@ stages:
       displayName: 'Deploy Workflow'
 
     - script: |
-        dbx launch --job=databricks-notebook-cicd-dev --existing-runs=cancel
+        dbx launch --job=databricks-notebook-cicd-ado-dev --existing-runs=cancel
       displayName: 'Restart Databricks Job'
 
 # Deploy to Prod Environment
@@ -83,5 +83,5 @@ stages:
       displayName: 'Deploy Workflow'
 
     - script: |
-        dbx launch --job=databricks-notebook-cicd-prod --existing-runs=cancel
+        dbx launch --job=databricks-notebook-cicd-ado-prod --existing-runs=cancel
       displayName: 'Restart Databricks Job'
