@@ -6,6 +6,7 @@ trigger:
   branches:
     include:
     - 'dev'
+pr: none # disable PR from triggering deployment
 
 stages:
 - stage: onPush
