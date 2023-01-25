@@ -30,4 +30,8 @@ display(transformed_df)
 
 # COMMAND ----------
 
+print(transformed_df.count())
+
+# COMMAND ----------
+
 # MAGIC %md ##### 3. Write to Data Lake
