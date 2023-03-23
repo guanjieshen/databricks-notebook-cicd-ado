@@ -24,7 +24,7 @@ transformed_df = df.transform(
 ).transform(lambda df: addETLMetadata(df, source))
 
 # COMMAND ----------
-
+print(transformed_df.count())
 display(transformed_df)
 
 # COMMAND ----------

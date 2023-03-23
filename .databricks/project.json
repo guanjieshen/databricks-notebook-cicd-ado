@@ -2,5 +2,6 @@
   "host": "https://adb-6991111357039288.8.azuredatabricks.net/",
   "authType": "profile",
   "profile": "guanjie-workspace",
-  "clusterId": "0124-225618-aeu5prwa"
+  "clusterId": "0124-225618-aeu5prwa",
+  "workspacePath": "/Repos/guanjie.shen@databricks.com/databricks-notebook-cicd-ado-vscode.ide"
 }
