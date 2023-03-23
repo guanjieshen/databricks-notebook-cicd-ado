@@ -88,6 +88,13 @@ stages:
       displayName: 'Install dependencies'
 
     - script: |
+        pip install coverage
+        coverage run -m unittest discover tests/unit "*_test.py"
+        coverage report
+      displayName: 'Run Unit Tests & Coverage'
+
+
+    - script: |
         dbx deploy --deployment-file=conf/prod-deployment.yml --no-rebuild
       displayName: 'Deploy Workflow'
 
